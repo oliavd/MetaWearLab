@@ -37,6 +37,9 @@ public class DeviceSetupActivityFragment extends Fragment implements ServiceConn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.i(
+                "onCreate","TEST STRING"
+        );
         Activity owner= getActivity();
         if (!(owner instanceof FragmentSettings)) {
             throw new ClassCastException("Owning activity must implement the FragmentSettings interface");
@@ -57,15 +60,17 @@ public class DeviceSetupActivityFragment extends Fragment implements ServiceConn
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
+
         return inflater.inflate(R.layout.fragment_device_setup_activity, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         Log.i(
                 "onViewCreated","View Created"
         );
+        super.onViewCreated(view, savedInstanceState);
+
 
         ((Switch) view.findViewById(R.id.led_ctrl)).setOnCheckedChangeListener((buttonView, isChecked) -> {
             Led led= metawear.getModule(Led.class);
@@ -73,7 +78,7 @@ public class DeviceSetupActivityFragment extends Fragment implements ServiceConn
                 Log.i(
                         "onViewCreated","isChecked"
                 );
-                led.editPattern(Led.Color.GREEN, Led.PatternPreset.SOLID)
+                led.editPattern(Led.Color.BLUE, Led.PatternPreset.PULSE)
                         .repeatCount(Led.PATTERN_REPEAT_INDEFINITELY)
                         .commit();
                 led.play();

@@ -118,6 +118,7 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         metawear = ((BtleService.LocalBinder) service).getMetaWearBoard(btDevice);
+
         metawear.onUnexpectedDisconnect(status -> {
             ReconnectDialogFragment dialogFragment= ReconnectDialogFragment.newInstance(btDevice);
             dialogFragment.show(getSupportFragmentManager(), RECONNECT_DIALOG_TAG);
@@ -127,7 +128,7 @@ public class DeviceSetupActivity extends AppCompatActivity implements ServiceCon
                         if (!task.isCancelled()) {
                             runOnUiThread(() -> {
                                 ((DialogFragment) getSupportFragmentManager().findFragmentByTag(RECONNECT_DIALOG_TAG)).dismiss();
-                                ((DeviceSetupActivityFragment) getSupportFragmentManager().findFragmentById(R.id.frameLayout)).reconnected();
+                                ((DeviceSetupActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_device_setup)).reconnected();
                             });
                         } else {
                             finish();
